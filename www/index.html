@@ -2481,6 +2481,7 @@ const Snd = {
       send.connect(d1); d1.connect(lp); lp.connect(fb); fb.connect(d1); lp.connect(master);
       this.music = c.createGain(); this.music.gain.value = 0; this.music.connect(master); this.music.connect(send);
       this.sfx = c.createGain(); this.sfx.gain.value = 0.55; this.sfx.connect(master); this.sfx.connect(send);
+      this.track = c.createGain(); this.track.gain.value = 0; this.track.connect(master); // recorded guzheng loop, no echo
       return true;
     } catch (e) { return false; }
   },
@@ -2514,19 +2515,47 @@ const Snd = {
       this.next += beat; this.step++;
     }
   },
-  startMusic() {
-    if (!this.init()) return;
-    try { this.ctx.resume(); } catch (e) {}
-    if (this.playing) return;
-    this.playing = true; this.next = this.ctx.currentTime + 0.1;
+  // Background music: a recorded guzheng piece, looped seamlessly with Web Audio.
+  // The file has 0.5 s of pre/post-roll so MP3 encoder padding never touches the loop points.
+  TRACK: { url: 'audio/guzheng-loop.mp3', loopStart: 0.5, loopEnd: 204.9 },
+  buf: null, loading: null, src: null,
+  loadTrack() {
+    if (this.buf) return Promise.resolve(this.buf);
+    if (!this.loading) this.loading = fetch(this.TRACK.url)
+      .then(r => { if (!r.ok) throw new Error('music ' + r.status); return r.arrayBuffer(); })
+      .then(b => new Promise((ok, bad) => { const p = this.ctx.decodeAudioData(b, ok, bad); if (p && p.then) p.then(ok, bad); }))
+      .then(buf => (this.buf = buf));
+    return this.loading;
+  },
+  startTrack() {
+    const c = this.ctx, src = c.createBufferSource();
+    src.buffer = this.buf; src.loop = true; src.loopStart = this.TRACK.loopStart; src.loopEnd = this.TRACK.loopEnd;
+    src.connect(this.track); src.start(0, this.TRACK.loopStart); this.src = src;
+    this.track.gain.cancelScheduledValues(c.currentTime);
+    this.track.gain.setTargetAtTime(0.9, c.currentTime, 1.2); // gentle fade-in
+  },
+  startProcedural() { // fallback if the recording can't load
+    this.next = this.ctx.currentTime + 0.1;
     this.music.gain.cancelScheduledValues(this.ctx.currentTime);
     this.music.gain.setTargetAtTime(0.7, this.ctx.currentTime, 0.8);
     this.timer = setInterval(() => this.tick(), 200);
   },
+  startMusic() {
+    if (!this.init()) return;
+    try { this.ctx.resume(); } catch (e) {}
+    if (this.playing) return;
+    this.playing = true;
+    this.loadTrack().then(() => { if (this.playing && !this.src) this.startTrack(); })
+      .catch(() => { if (this.playing && !this.timer) this.startProcedural(); });
+  },
   stopMusic() {
     if (!this.ctx || !this.playing) return;
-    this.playing = false; clearInterval(this.timer);
-    this.music.gain.setTargetAtTime(0, this.ctx.currentTime, 0.3);
+    this.playing = false; clearInterval(this.timer); this.timer = null;
+    const t = this.ctx.currentTime;
+    this.music.gain.setTargetAtTime(0, t, 0.3);
+    this.track.gain.cancelScheduledValues(t); this.track.gain.setTargetAtTime(0, t, 0.35);
+    const src = this.src; this.src = null;
+    if (src) setTimeout(() => { try { src.stop(); } catch (e) {} }, 2000);
   },
   fx(kind) {
     if (!settings.sfx || !this.init()) return;

@@ -11,7 +11,7 @@ Each solved phrase pops up its meaning and is read aloud, and every phrase learn
 ## Download
 
 - **Website:** https://aadvark.github.io/chinese_crossword/ (landing page; play in the browser at https://aadvark.github.io/chinese_crossword/www/)
-- **Android:** [miaoyulianzhu.apk](https://github.com/aadvark/chinese_crossword/raw/main/apk/miaoyulianzhu.apk) (v1.2, Android 7.0+). Install steps in [apk/README.md](apk/README.md).
+- **Android:** [miaoyulianzhu.apk](https://github.com/aadvark/chinese_crossword/raw/main/apk/miaoyulianzhu.apk) (v1.3, Android 7.0+). Install steps in [apk/README.md](apk/README.md).
 
 ## Layout
 
