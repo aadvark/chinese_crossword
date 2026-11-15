@@ -200,8 +200,8 @@
     "s": "需要安装吗？"
   },
   "a2": {
-    "en": "No. It runs in the browser on any phone or tablet. On Android you can also download the app (APK) from this page; it works offline. For an app-like icon in the browser, use “Add to Home Screen”.",
-    "s": "不用。手机或平板的浏览器就能玩。安卓手机也可以在本页下载 App（APK），不用上网也能玩。想在浏览器里像 App 一样打开，可以用「添加到主屏幕」。"
+    "en": "No. It runs in the browser on any phone or tablet. Android users can also try the preview app (APK) from this page; it works offline. For an app-like icon in the browser, use “Add to Home Screen”.",
+    "s": "不用。手机或平板的浏览器就能玩。安卓手机也可以在本页下载预览版 App（APK）试玩，不用上网也能玩。想在浏览器里像 App 一样打开，可以用「添加到主屏幕」。"
   },
   "q3": {
     "en": "Is my progress saved?",
@@ -242,5 +242,21 @@
   "dl_note": {
     "en": "Android 7.0 or newer · 6.4 MB · when asked, allow your browser to install apps",
     "s": "Android 7.0 或以上 · 6.4 MB · 安装时如有提示，请允许浏览器安装应用"
+  },
+  "preview": {
+    "en": "Preview",
+    "s": "预览版"
+  },
+  "disclaimer": {
+    "en": "Preview build for early testing. It may still have bugs, and saved progress might not carry over to the official Google Play version, which will come once the app is stable. Installing apps from outside Google Play is at your own discretion.",
+    "s": "这是供早期试玩的预览版，可能还有一些问题。保存的进度未必能转到之后的 Google Play 正式版（应用稳定后推出）。从 Google Play 以外安装应用，请自行斟酌。"
+  },
+  "q5": {
+    "en": "What is the preview app?",
+    "s": "预览版是什么？"
+  },
+  "a5": {
+    "en": "An early Android build for direct download while the game is being polished. It is free like the web version. The official app will be released on Google Play when it is stable.",
+    "s": "在游戏还在打磨期间，提供直接下载的早期安卓版本，和网页版一样免费。应用稳定后，正式版会在 Google Play 上架。"
   }
 }
