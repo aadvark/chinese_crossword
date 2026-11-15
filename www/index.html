@@ -206,6 +206,8 @@ header{min-width:0}.brand{min-width:0}
   <div class="desc" id="sDiffDesc"></div>
   <div class="setting">文字<div class="seg" id="sLang" data-raw></div></div>
   <div class="setting">字号<div class="seg" id="sSize"></div></div>
+  <div class="setting" id="rowFs">全屏<div class="seg" id="sFs"></div></div>
+  <div class="desc" id="sFsNote"></div>
   <div class="setting">背景音乐<div class="seg" id="sMusic"></div></div>
   <div class="setting">音效<div class="seg" id="sSfx"></div></div>
   <div class="setting">朗读<div class="seg" id="sVoice"></div></div>
@@ -2706,7 +2708,27 @@ function seg(id, opts, cur, onPick) {
   const el = $(id); el.innerHTML = '';
   opts.forEach(([label, val]) => { const b = document.createElement('button'); b.textContent = label; if (label === '简体') b.lang = 'zh-Hans'; if (val === cur) b.className = 'on'; b.onclick = () => { onPick(val); paintSettings(); }; el.appendChild(b); });
 }
+// ---------- fullscreen (web only; must start from a tap) ----------
+const fsEl = document.documentElement;
+const fsSupported = !!(fsEl.requestFullscreen || fsEl.webkitRequestFullscreen) && document.fullscreenEnabled !== false;
+const isFs = () => !!(document.fullscreenElement || document.webkitFullscreenElement);
+function setFs(on) {
+  const note = t => { $('sFsNote').textContent = t; };
+  try {
+    const p = on ? (fsEl.requestFullscreen ? fsEl.requestFullscreen({ navigationUI: 'hide' }) : fsEl.webkitRequestFullscreen())
+                 : (document.exitFullscreen ? document.exitFullscreen() : document.webkitExitFullscreen());
+    if (p && p.catch) p.catch(() => note('这个浏览器不允许全屏。可以用浏览器菜单「添加到主屏幕」，像 App 一样打开。'));
+  } catch (e) { note('这个浏览器不允许全屏。可以用浏览器菜单「添加到主屏幕」，像 App 一样打开。'); }
+}
+['fullscreenchange', 'webkitfullscreenchange'].forEach(ev => document.addEventListener(ev, () => { if ($('ovSet').classList.contains('show')) paintSettings(); }));
+
 function paintSettings() {
+  $('rowFs').style.display = NATIVE ? 'none' : '';
+  $('sFsNote').style.display = NATIVE ? 'none' : '';
+  if (!NATIVE) {
+    if (fsSupported) { seg('sFs', [['开', true], ['关', false]], isFs(), v => { if (v !== isFs()) setFs(v); }); if (!$('sFsNote').textContent.includes('不允许')) $('sFsNote').textContent = isFs() ? '再按一次「关」或按返回键退出全屏' : ''; }
+    else { $('sFs').innerHTML = ''; $('sFsNote').textContent = '这个浏览器不支持全屏。可以用浏览器菜单「添加到主屏幕」，像 App 一样打开。'; }
+  }
   seg('sDiff', DIFF.map((d, i) => [d.name, i]), settings.diff, v => { if (v !== settings.diff) { settings.diff = v; saveSettings(); start(); } });
   $('sDiffDesc').textContent = DIFF[settings.diff].desc;
   seg('sLang', [['简体', 's'], ['繁體', 't']], settings.lang || 's', v => { if (v !== settings.lang) { settings.lang = v; saveSettings(); applyLang(); start(); } });
