@@ -57,6 +57,23 @@ header{min-width:0}.brand{min-width:0}
 .icons button span{font-size:11.5px;font-weight:700;color:var(--ink2);letter-spacing:1px;line-height:1;text-shadow:0 0 6px #fff8e8}
 .lvrow{display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap}
 .ribbon{position:relative;background:linear-gradient(#c23a26,#9c2816);color:#fff6e3;font-family:var(--serif);font-weight:900;font-size:22px;padding:7px 22px;border-radius:6px;box-shadow:0 3px 8px rgba(120,30,10,.25);letter-spacing:2px}
+html.big .msg{font-size:23px}
+html.big .sub{font-size:18px}
+html.big .ribbon{font-size:26px}
+html.big .chip{font-size:19px}
+html.big .bar button{font-size:24px;padding:15px 20px}
+html.big .meaning{font-size:25px}
+html.big .tag{font-size:17px}
+html.big .card p,html.big .card li{font-size:22px}
+html.big .card h2{font-size:32px}
+html.big .wl b{font-size:25px}
+html.big .wl span{font-size:19px}
+html.big .wl i{font-size:14px}
+html.big .setting{font-size:23px}
+html.big .seg button{font-size:20px;padding:10px 14px}
+html.big .desc{font-size:18px}
+html.big .mrow button,html.big .card button{font-size:25px}
+html.big .icons button span{font-size:13px}
 .fsbtn{display:inline-flex;align-items:center;gap:6px;border-color:#7a5a3a;color:#4a3420}
 .fsbtn svg{width:17px;height:17px}
 .chip{font-size:16px;font-weight:800;padding:6px 12px;border-radius:999px;border:1.5px solid var(--gold2);background:#fff8e6;color:var(--gold2);cursor:pointer}
@@ -2577,7 +2594,9 @@ function render() {
   $('bHint').textContent = `💡 提示 ×${hintsLeft}`;
   $('bHint').disabled = hintsLeft <= 0;
   const avail = Math.min(window.innerWidth, 640) - 36;
-  const gap = 4;
+  const big = settings.scale > 1;
+  document.documentElement.classList.toggle('big', big);
+  const gap = big ? 2 : 4;
   const size = Math.floor(Math.min((avail - gap * (P.cols - 1)) / P.cols, 60 * settings.scale));
   const b = $('board');
   b.style.gridTemplateColumns = `repeat(${P.cols}, ${size}px)`;
@@ -2591,7 +2610,7 @@ function render() {
   for (let y = 0; y < P.rows; y++) for (let x = 0; x < P.cols; x++) {
     const k = y + ',' + x, c = P.cells[k], d = document.createElement('div');
     if (!c) { d.className = 'c'; b.appendChild(d); continue; }
-    d.style.fontSize = Math.floor(size * 0.62) + 'px';
+    d.style.fontSize = Math.floor(size * (big ? 0.78 : 0.62)) + 'px';
     let cls = 'c ';
     if (!c.hidden) { cls += 'given'; d.textContent = c.ch; }
     else {
@@ -2608,12 +2627,12 @@ function render() {
   }
   popWords = new Set();
   const pool = $('pool'); pool.innerHTML = '';
-  const perRow = P.pool.length > 30 ? 7 : 6;
+  const perRow = big ? (P.pool.length > 30 ? 6 : 5) : (P.pool.length > 30 ? 7 : 6);
   const ps = Math.round(Math.min(56 * settings.scale, (avail - 8 * (perRow - 1)) / perRow));
   P.pool.forEach(p => {
     const e = document.createElement('button');
     e.className = 'p' + (p.used ? ' used' : '');
-    e.textContent = p.ch; e.style.width = e.style.height = ps + 'px'; e.style.fontSize = Math.floor(ps * 0.6) + 'px';
+    e.textContent = p.ch; e.style.width = e.style.height = ps + 'px'; e.style.fontSize = Math.floor(ps * (big ? 0.66 : 0.6)) + 'px';
     e.onclick = () => tapPool(p.id);
     pool.appendChild(e);
   });
@@ -2668,7 +2687,7 @@ function showMeaning() {
   $('mTag').textContent = tagName(w);
   $('mTag').className = 'tag ' + tagCls(w);
   $('mPhrase').textContent = w.show;
-  const L = [...w.show].length; $('mPhrase').style.fontSize = (L > 10 ? 22 : L > 7 ? 26 : 32) + 'px';
+  const L = [...w.show].length; $('mPhrase').style.fontSize = Math.round((L > 10 ? 22 : L > 7 ? 26 : 32) * (settings.scale > 1 ? 1.2 : 1)) + 'px';
   $('mText').innerHTML = '<b>意思：</b>' + w.mean;
   $('ovMean').classList.add('show');
   $('ovMean').dataset.say = w.show + '。' + w.mean;
