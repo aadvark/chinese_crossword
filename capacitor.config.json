@@ -1,0 +1,14 @@
+{
+  "appId": "com.kithandkeen.miaoyulianzhu",
+  "appName": "妙语连珠",
+  "webDir": "dist/android-www",
+  "android": { "backgroundColor": "#efe3c8" },
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 900,
+      "launchAutoHide": true,
+      "backgroundColor": "#efe3c8",
+      "showSpinner": false
+    }
+  }
+}
