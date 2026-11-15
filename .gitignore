@@ -1,0 +1,12 @@
+node_modules/
+dist/
+tools/fonts-src/*.ttf
+tools/fonts-src/chars.txt
+android/app/build/
+android/build/
+android/.gradle/
+android/local.properties
+android/app/release/
+*.keystore
+*.jks
+.DS_Store

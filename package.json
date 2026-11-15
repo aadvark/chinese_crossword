@@ -1,0 +1,22 @@
+{
+  "name": "miaoyulianzhu",
+  "version": "1.0.0",
+  "private": true,
+  "description": "妙语连珠 — Chinese idiom & saying crossword (web + Android)",
+  "scripts": {
+    "build:web": "python3 tools/build.py web",
+    "build:android": "python3 tools/build.py android && npx cap sync android",
+    "fonts": "python3 tools/subset_fonts.py"
+  },
+  "dependencies": {
+    "@capacitor-community/keep-awake": "^8.0.1",
+    "@capacitor-community/text-to-speech": "^8.0.2",
+    "@capacitor/android": "^8.6.2",
+    "@capacitor/app": "^8.1.2",
+    "@capacitor/cli": "^8.6.2",
+    "@capacitor/core": "^8.6.2",
+    "@capacitor/haptics": "^8.0.2",
+    "@capacitor/preferences": "^8.0.1",
+    "@capacitor/splash-screen": "^8.0.2"
+  }
+}
