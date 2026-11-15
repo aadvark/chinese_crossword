@@ -45,6 +45,9 @@ html[lang="zh-Hant"] .brand b{font-family:"LXGW WenKai TC",serif;font-weight:700
 .btn-play{background:linear-gradient(#c23a26,var(--cinnabar-deep));color:#fff7e8;box-shadow:0 4px 0 #5e160a,0 10px 22px rgba(134,32,15,.28)}
 .btn-play:hover{transform:translateY(-2px);box-shadow:0 6px 0 #5e160a,0 14px 26px rgba(134,32,15,.32)}
 .btn-play:active{transform:translateY(2px);box-shadow:0 2px 0 #5e160a}
+.btn-apk{font-size:17px;padding:13px 22px;min-height:54px;background:var(--silk);color:var(--jade);box-shadow:inset 0 0 0 2px var(--jade),0 3px 0 rgba(47,107,69,.35)}
+.btn-apk:hover{transform:translateY(-2px);background:#eef7ea}
+.btn-apk svg{width:20px;height:20px}
 .btn-sm{font-size:15px;padding:8px 16px;min-height:40px}
 .btn-lg{font-size:22px;padding:16px 30px;min-height:60px}
 .btn-lg svg{width:22px;height:22px}
@@ -187,9 +190,9 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:8px 24px;align-items:center;justify
       <p class="lead" data-i18n="hero_p"></p>
       <div class="cta-row">
         <a class="btn btn-play btn-lg" data-app href="__APP__"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 4.5v15l12-7.5z"/></svg><span data-i18n="cta"></span></a>
-        <span class="soon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="2.5" width="12" height="19" rx="2.5"/><path d="M10.5 18.5h3"/></svg><span data-i18n="android"></span></span>
+        <a class="btn btn-apk" href="https://github.com/aadvark/chinese_crossword/releases/latest/download/miaoyulianzhu.apk" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 10.5l5 5 5-5M5 19.5h14"/></svg><span data-i18n="dl_apk"></span></a>
       </div>
-      <p class="note" data-i18n="cta_note"></p>
+      <p class="note"><span data-i18n="cta_note"></span><br><span data-i18n="dl_note"></span></p>
     </div>
     <div class="stage" aria-hidden="true">
       <div class="scroll">
@@ -294,7 +297,8 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:8px 24px;align-items:center;justify
       __SEAL64__
       <h2 data-i18n="final_h"></h2>
       <a class="btn btn-play btn-lg" data-app href="__APP__"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 4.5v15l12-7.5z"/></svg><span data-i18n="cta"></span></a>
-      <span class="note" data-i18n="cta_note" style="margin:0"></span>
+      <a class="btn btn-apk" href="https://github.com/aadvark/chinese_crossword/releases/latest/download/miaoyulianzhu.apk" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 10.5l5 5 5-5M5 19.5h14"/></svg><span data-i18n="dl_apk"></span></a>
+      <span class="note" style="margin:0"><span data-i18n="cta_note"></span><br><span data-i18n="dl_note"></span></span>
     </div>
   </div>
 </section>

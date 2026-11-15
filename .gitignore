@@ -10,3 +10,4 @@ android/app/release/
 *.keystore
 *.jks
 .DS_Store
+android/keystore.properties
