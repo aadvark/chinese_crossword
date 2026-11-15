@@ -8,12 +8,18 @@ Each solved phrase pops up its meaning and is read aloud, and every phrase learn
 - **Four seasons of 山水画** backgrounds, guzheng-style music, large tap targets, three difficulty levels.
 - **Free, no ads, no data collected, works offline.**
 
+## Download
+
+- **Play in the browser:** see the landing page in `landing/`.
+- **Android:** [miaoyulianzhu.apk](https://github.com/aadvark/chinese_crossword/raw/main/apk/miaoyulianzhu.apk) (v1.0, Android 7.0+). Install steps in [apk/README.md](apk/README.md).
+
 ## Layout
 
 ```
 landing/             Bilingual landing page (EN / 简 / 繁); build with tools/build_landing.py
 www/                 The game: one page (index.html) + bg/ paintings + fonts/ (trimmed woff2)
 android/             Capacitor Android project (com.kithandkeen.miaoyulianzhu, targets API 36)
+apk/                 Signed Android APK for direct download
 assets/              Icon and splash sources (generated into android/ by @capacitor/assets)
 tools/build.py       Build targets: web (www/ as is) and android (offline copy, no Google Fonts)
 tools/subset_fonts.py  Re-trim fonts after changing phrases or UI text (source TTFs not committed)
