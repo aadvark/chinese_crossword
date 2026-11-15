@@ -10,7 +10,7 @@ Each solved phrase pops up its meaning and is read aloud, and every phrase learn
 
 ## Download
 
-- **Play in the browser:** see the landing page in `landing/`.
+- **Website:** https://aadvark.github.io/chinese_crossword/ (landing page; play in the browser at https://aadvark.github.io/chinese_crossword/www/)
 - **Android:** [miaoyulianzhu.apk](https://github.com/aadvark/chinese_crossword/raw/main/apk/miaoyulianzhu.apk) (v1.0, Android 7.0+). Install steps in [apk/README.md](apk/README.md).
 
 ## Layout
@@ -29,7 +29,7 @@ tools/data*.txt      Phrase lists with meanings (simplified; traditional is gene
 ## Web
 
 `www/` is a static site; open `www/index.html` or host the folder anywhere.
-`landing/` is the landing page. On GitHub Pages its launch buttons point to `../www/`; elsewhere to the published game link.
+`landing/` is the landing page, served by GitHub Pages from `main` (root `index.html` redirects to it). On GitHub Pages its Play buttons open `../www/`; elsewhere the published claude.ai game link.
 
 ## Android
 
