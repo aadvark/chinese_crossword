@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>妙语连珠 · Chinese Crossword</title>
+<meta name="description" content="妙语连珠: an endless Chinese crossword of 成语, 俗语, 谚语 and 歇后语, with meanings read aloud. Free, no ads, in 简体 or 繁體.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=LXGW+WenKai+TC:wght@700&family=Noto+Serif+SC:wght@500;700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* One visual world: a hanging scroll on rice paper. Ink for text, cinnabar seal for action, jade for "correct". */
+  --paper:#f3ead6; --paper-deep:#e8d9b9; --silk:#fbf5e8;
+  --ink:#2a1e14; --ink-soft:#5f4a30; --cinnabar:#b0301f; --cinnabar-deep:#86200f; --jade:#2f6b45; --gold:#c8952e;
+  --display:"Ma Shan Zheng","Noto Serif SC",serif;
+  --body:"Noto Serif SC","Songti SC","STSong",serif;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.7;-webkit-font-smoothing:antialiased;
+  background-image:radial-gradient(circle at 18% 12%,rgba(255,255,255,.55),transparent 42%),radial-gradient(rgba(120,90,50,.07) 1px,transparent 1.4px);background-size:auto,22px 22px}
+img{max-width:100%;display:block}
+a{color:var(--cinnabar)}
+:focus-visible{outline:3px solid var(--gold);outline-offset:3px;border-radius:6px}
+h1,h2,h3{text-wrap:balance;margin:0;line-height:1.25}
+.wrap{width:min(1160px,100% - 32px);margin-inline:auto}
+.brush{font-family:var(--display);font-weight:400}
+html[lang="zh-Hant"] .brush{font-family:"LXGW WenKai TC","Noto Serif SC",serif;font-weight:700}
+
+/* top bar */
+.bar{position:sticky;top:0;z-index:20;background:rgba(243,234,214,.88);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-bottom:1px solid rgba(120,90,50,.18)}
+.bar .wrap{display:flex;align-items:center;gap:14px;min-height:64px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink);margin-right:auto;min-width:0}
+.brand svg{flex:none}
+.brand b{font-family:var(--display);font-weight:400;font-size:28px;letter-spacing:2px;white-space:nowrap}
+html[lang="zh-Hant"] .brand b{font-family:"LXGW WenKai TC",serif;font-weight:700;font-size:25px}
+.brand b em{font-style:normal;color:var(--cinnabar)}
+.langs{display:flex;border:1.5px solid rgba(95,74,48,.35);border-radius:999px;padding:3px;gap:2px;background:var(--silk)}
+.langs button{font:inherit;font-size:14px;font-weight:700;border:0;background:none;color:var(--ink-soft);padding:4px 11px;border-radius:999px;cursor:pointer;min-height:32px}
+.langs button[aria-pressed="true"]{background:var(--ink);color:var(--silk)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;font-family:var(--body);font-weight:900;text-decoration:none;border-radius:14px;transition:transform .15s,box-shadow .15s}
+.btn-play{background:linear-gradient(#c23a26,var(--cinnabar-deep));color:#fff7e8;box-shadow:0 4px 0 #5e160a,0 10px 22px rgba(134,32,15,.28)}
+.btn-play:hover{transform:translateY(-2px);box-shadow:0 6px 0 #5e160a,0 14px 26px rgba(134,32,15,.32)}
+.btn-play:active{transform:translateY(2px);box-shadow:0 2px 0 #5e160a}
+.btn-sm{font-size:15px;padding:8px 16px;min-height:40px}
+.btn-lg{font-size:22px;padding:16px 30px;min-height:60px}
+.btn-lg svg{width:22px;height:22px}
+
+/* hero */
+.hero{padding:56px 0 40px}
+.hero .wrap{display:grid;gap:48px;align-items:center}
+@media (min-width:920px){.hero .wrap{grid-template-columns:1.05fr .95fr}}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:14px;font-weight:700;color:var(--ink-soft);letter-spacing:1px}
+.eyebrow i{width:8px;height:8px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fffbe6,#ecc361 55%,#a8741a)}
+.hero h1{font-size:clamp(36px,5.6vw,64px);font-weight:900;margin:14px 0 18px;letter-spacing:.5px}
+html[lang^="zh"] .hero h1{letter-spacing:4px}
+.hero p.lead{font-size:clamp(17px,1.6vw,20px);color:var(--ink-soft);max-width:34em;margin:0 0 28px}
+.cta-row{display:flex;flex-wrap:wrap;align-items:center;gap:14px 20px}
+.note{font-size:14px;color:var(--ink-soft);margin:14px 0 0}
+.soon{display:inline-flex;align-items:center;gap:8px;font-size:14px;font-weight:700;color:var(--jade);border:1.5px dashed rgba(47,107,69,.5);border-radius:999px;padding:6px 14px;background:rgba(220,239,217,.45)}
+.soon svg{width:18px;height:18px}
+
+/* the hanging scroll */
+.stage{position:relative;display:flex;justify-content:center;padding:0 0 24px}
+.scroll{position:relative;width:min(330px,72vw)}
+.rod{position:relative;height:18px;border-radius:9px;background:linear-gradient(#7a5233,#3e2716 55%,#6b4628);box-shadow:0 3px 6px rgba(40,25,10,.35);margin:0 -14px;z-index:2}
+.rod::before,.rod::after{content:"";position:absolute;top:-3px;width:14px;height:24px;border-radius:5px;background:linear-gradient(#e6c06a,#a8741a)}
+.rod::before{left:-10px}.rod::after{right:-10px}
+.mount{background:var(--silk);padding:16px 14px 22px;box-shadow:0 18px 40px rgba(60,40,20,.25);border-left:6px solid #d9c49a;border-right:6px solid #d9c49a;transform-origin:top;animation:unroll 1.6s cubic-bezier(.2,.7,.2,1) both}
+@keyframes unroll{from{clip-path:inset(0 0 82% 0)}to{clip-path:inset(0 0 0 0)}}
+.rod.bottom{animation:drop 1.6s cubic-bezier(.2,.7,.2,1) both}
+@keyframes drop{from{transform:translateY(-470px)}to{transform:none}}
+.painting{height:470px;border:1px solid rgba(120,90,50,.25);overflow:hidden}
+.painting img{width:100%;height:100%;object-fit:cover;object-position:50% 50%}
+.cap{margin-top:10px;text-align:center;font-size:13px;color:var(--ink-soft);letter-spacing:2px}
+.vtitle{position:absolute;top:44px;right:calc(50% - min(330px,72vw)/2 - 64px);writing-mode:vertical-rl;font-size:54px;letter-spacing:10px;color:var(--ink);display:flex;align-items:center;gap:14px;text-shadow:0 2px 0 rgba(255,250,235,.8)}
+.vtitle em{font-style:normal;color:var(--cinnabar)}
+.phone{position:absolute;z-index:3;left:calc(50% - min(330px,72vw)/2 - 70px);bottom:-6px;width:200px;padding:8px;border-radius:30px;background:#1f1a16;box-shadow:0 24px 40px rgba(40,25,10,.35);transform:rotate(-4deg)}
+.phone img{border-radius:23px;aspect-ratio:390/844;object-fit:cover}
+@media (max-width:620px){.vtitle{font-size:40px;right:-6px;top:30px;letter-spacing:6px}.phone{width:150px;left:-6px;padding:6px;border-radius:24px}.phone img{border-radius:19px}.painting{height:400px}@keyframes drop{from{transform:translateY(-400px)}to{transform:none}}}
+
+/* numbers */
+.facts{border-block:1px solid rgba(120,90,50,.22);background:rgba(251,245,232,.6)}
+.facts .wrap{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0}
+@media (min-width:820px){.facts .wrap{grid-template-columns:1.3fr 1fr 1fr 1fr 1fr}}
+.fact{padding:22px 18px;border-left:1px solid rgba(120,90,50,.16)}
+.fact:first-child{border-left:0}
+.fact strong{display:block;font-size:clamp(30px,3.4vw,42px);font-weight:900;line-height:1.1;font-variant-numeric:tabular-nums;color:var(--ink)}
+.fact:first-child strong{color:var(--cinnabar)}
+.fact span{font-size:14px;color:var(--ink-soft)}
+@media (max-width:819px){.fact:nth-child(odd){border-left:0}.fact{border-top:1px solid rgba(120,90,50,.16)}.fact:first-child{grid-column:1/-1;border-top:0}}
+
+section{padding:80px 0}
+.sec-h{font-size:clamp(28px,3.4vw,40px);font-weight:900;margin-bottom:12px;letter-spacing:1px}
+html[lang^="zh"] .sec-h{letter-spacing:4px}
+.sec-p{color:var(--ink-soft);max-width:38em;margin:0 0 36px}
+
+/* features: ruled list, not cards */
+.feats{display:grid;gap:0 48px;grid-template-columns:1fr}
+@media (min-width:640px){.feats{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (min-width:980px){.feats{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.feat{display:grid;grid-template-columns:48px 1fr;gap:16px;padding:24px 0;border-top:1px solid rgba(120,90,50,.22)}
+.feat .ic{width:48px;height:48px;border-radius:50%;display:grid;place-items:center;background:var(--silk);box-shadow:inset 0 0 0 1px rgba(168,116,26,.3);color:var(--ink)}
+.feat .ic svg{width:24px;height:24px}
+.feat h3{font-size:20px;font-weight:900;margin-bottom:6px}
+.feat p{margin:0;font-size:16px;color:var(--ink-soft)}
+.promise{margin-top:28px;display:inline-block;font-weight:700;font-size:15px;color:var(--jade);letter-spacing:1px}
+
+/* gallery */
+.gallery-sec{background:linear-gradient(var(--paper-deep),var(--paper));}
+.gallery{display:flex;gap:26px;overflow-x:auto;scroll-snap-type:x mandatory;padding:8px 16px 26px;margin:0 -16px;scrollbar-width:thin}
+.shot{flex:none;width:230px;scroll-snap-align:center;margin:0;display:flex;flex-direction:column;gap:14px}
+.shot .frame{padding:8px;border-radius:32px;background:#1f1a16;box-shadow:0 16px 30px rgba(40,25,10,.25)}
+.shot img{border-radius:25px;aspect-ratio:390/844;object-fit:cover;width:100%}
+.shot figcaption{font-weight:700;font-size:16px;text-align:center}
+.shot:first-child{margin-left:auto}.shot:last-child{margin-right:auto}
+
+/* how to play */
+.steps{display:grid;gap:28px;grid-template-columns:1fr;counter-reset:s}
+@media (min-width:860px){.steps{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.step{background:var(--silk);border-radius:20px;padding:26px 24px;box-shadow:0 1px 0 rgba(120,90,50,.2)}
+.step .num{font-family:var(--display);font-size:40px;color:var(--cinnabar);line-height:1}
+html[lang="zh-Hant"] .step .num{font-family:"LXGW WenKai TC",serif}
+.step h3{font-size:20px;font-weight:900;margin:8px 0 6px}
+.step p{margin:0;font-size:16px;color:var(--ink-soft)}
+.demo{display:flex;gap:6px;margin:4px 0 18px;min-height:56px;align-items:center;flex-wrap:wrap}
+.cell{width:48px;height:48px;border-radius:9px;display:grid;place-items:center;font-weight:900;font-size:26px;background:#f7edd4;box-shadow:inset 0 0 0 1.5px #d8bf8c;color:var(--ink)}
+.cell.blank{background:#fff;box-shadow:inset 0 0 0 2px #d8bf8c}
+.cell.sel{background:#ffe08a;box-shadow:0 0 0 3px var(--gold),0 0 12px rgba(200,149,46,.55)}
+.cell.hl{background:#fff1c4}
+.cell.ok{background:#d4ecc9;color:var(--jade);box-shadow:inset 0 0 0 1.5px #9fcb98}
+.tile{width:48px;height:48px;border-radius:9px;display:grid;place-items:center;font-weight:900;font-size:26px;background:linear-gradient(#fffdf5,#efe2c2);color:var(--cinnabar-deep);box-shadow:0 4px 0 #b08d4f}
+.tile.up{transform:translateY(-8px);box-shadow:0 10px 0 #b08d4f;animation:bob 2.4s ease-in-out infinite}
+@keyframes bob{50%{transform:translateY(-3px);box-shadow:0 6px 0 #b08d4f}}
+.bubble{font-size:13px;line-height:1.5;color:var(--ink);background:#fff;border-left:4px solid var(--gold);border-radius:8px;padding:6px 10px;margin-top:6px;width:100%}
+
+/* seasons */
+.seasons{display:grid;gap:18px;grid-template-columns:repeat(2,minmax(0,1fr))}
+@media (min-width:860px){.seasons{grid-template-columns:repeat(4,minmax(0,1fr))}}
+.season{position:relative;margin:0;border-radius:6px;overflow:hidden;aspect-ratio:3/4.4;box-shadow:0 14px 28px rgba(60,40,20,.2);border:6px solid var(--silk)}
+.season img{width:100%;height:100%;object-fit:cover;object-position:50% 50%}
+.season figcaption{position:absolute;left:12px;top:12px;display:flex;flex-direction:column;align-items:center;gap:6px;padding:10px 8px;border-radius:8px;background:rgba(251,245,232,.82)}
+.season figcaption b{font-family:var(--display);font-weight:400;font-size:38px;line-height:1;color:var(--ink)}
+html[lang="zh-Hant"] .season figcaption b{font-family:"LXGW WenKai TC",serif;font-weight:700}
+.season figcaption span{font-size:12px;font-weight:700;color:var(--ink-soft)}
+
+/* faq */
+.faq{display:grid;gap:0 48px;grid-template-columns:1fr}
+@media (min-width:860px){.faq{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.qa{padding:22px 0;border-top:1px solid rgba(120,90,50,.22)}
+.qa h3{font-size:19px;font-weight:900;margin-bottom:6px}
+.qa p{margin:0;color:var(--ink-soft);font-size:16px}
+
+/* final */
+.final{position:relative;padding:0;margin:40px 0 0}
+.final .art{position:relative;min-height:440px;display:grid;place-items:center;overflow:hidden}
+.final .art img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 52%}
+.final .panel{position:relative;text-align:center;background:rgba(251,245,232,.88);border-radius:22px;padding:34px 36px;margin:40px 16px;box-shadow:0 18px 40px rgba(40,25,10,.25);display:flex;flex-direction:column;align-items:center;gap:18px}
+.final h2{font-size:clamp(28px,3.6vw,40px);font-weight:900}
+footer{padding:30px 0 40px;font-size:14px;color:var(--ink-soft)}
+footer .wrap{display:flex;flex-wrap:wrap;gap:8px 24px;align-items:center;justify-content:space-between}
+@media (max-width:520px){.bar .btn-sm{display:none}.brand b{font-size:24px}}
+</style>
+</head>
+<body>
+<header class="bar">
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="妙语连珠"><svg width="40" height="40" viewBox="0 0 64 64" aria-hidden="true" style="transform:rotate(-6deg);flex:none"><defs><filter id="wa" x="-10%" y="-10%" width="120%" height="120%"><feTurbulence type="fractalNoise" baseFrequency="1.1" numOctaves="2" seed="7" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="2.6"/></filter><radialGradient id="pa" cx="35%" cy="30%" r="70%"><stop offset="0" stop-color="#fffbe6"/><stop offset=".5" stop-color="#ecc361"/><stop offset="1" stop-color="#a8741a"/></radialGradient></defs><g filter="url(#wa)"><rect x="4" y="4" width="56" height="56" rx="7" fill="#b8321f"/><rect x="9" y="9" width="46" height="46" rx="4" fill="none" stroke="#fbe9d0" stroke-width="2.2"/><text x="32" y="46" text-anchor="middle" font-family="Ma Shan Zheng, serif" font-size="38" fill="#fbe9d0">妙</text></g><circle cx="56" cy="56" r="7" fill="url(#pa)" stroke="#8a5a10" stroke-width=".6"/></svg><b>妙语<em>连珠</em></b></a>
+    <div class="langs" role="group" aria-label="Language">
+      <button type="button" data-lang="en" aria-pressed="true">EN</button>
+      <button type="button" data-lang="s" aria-pressed="false" lang="zh-Hans">简</button>
+      <button type="button" data-lang="t" aria-pressed="false" lang="zh-Hant">繁</button>
+    </div>
+    <a class="btn btn-play btn-sm" data-app href="https://claude.ai/artifact/2U8ZtL2ZL4TXFYvVh7JvN1" data-i18n="nav_play">Play</a>
+  </div>
+</header>
+
+<main id="top">
+<section class="hero">
+  <div class="wrap">
+    <div>
+      <span class="eyebrow"><i aria-hidden="true"></i><span data-i18n="eyebrow"></span></span>
+      <h1 data-i18n="hero_h"></h1>
+      <p class="lead" data-i18n="hero_p"></p>
+      <div class="cta-row">
+        <a class="btn btn-play btn-lg" data-app href="https://claude.ai/artifact/2U8ZtL2ZL4TXFYvVh7JvN1"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 4.5v15l12-7.5z"/></svg><span data-i18n="cta"></span></a>
+        <span class="soon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="2.5" width="12" height="19" rx="2.5"/><path d="M10.5 18.5h3"/></svg><span data-i18n="android"></span></span>
+      </div>
+      <p class="note" data-i18n="cta_note"></p>
+    </div>
+    <div class="stage" aria-hidden="true">
+      <div class="scroll">
+        <div class="rod"></div>
+        <div class="mount">
+          <div class="painting"><img src="img/spring.webp" alt=""></div>
+          <div class="cap" data-i18n="scroll_caption"></div>
+        </div>
+        <div class="rod bottom"></div>
+      </div>
+      <div class="vtitle brush">妙语<em>连珠</em><svg width="44" height="44" viewBox="0 0 64 64" aria-hidden="true" style="transform:rotate(-6deg);flex:none"><defs><filter id="wb" x="-10%" y="-10%" width="120%" height="120%"><feTurbulence type="fractalNoise" baseFrequency="1.1" numOctaves="2" seed="7" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="2.6"/></filter><radialGradient id="pb" cx="35%" cy="30%" r="70%"><stop offset="0" stop-color="#fffbe6"/><stop offset=".5" stop-color="#ecc361"/><stop offset="1" stop-color="#a8741a"/></radialGradient></defs><g filter="url(#wb)"><rect x="4" y="4" width="56" height="56" rx="7" fill="#b8321f"/><rect x="9" y="9" width="46" height="46" rx="4" fill="none" stroke="#fbe9d0" stroke-width="2.2"/><text x="32" y="46" text-anchor="middle" font-family="Ma Shan Zheng, serif" font-size="38" fill="#fbe9d0">妙</text></g><circle cx="56" cy="56" r="7" fill="url(#pb)" stroke="#8a5a10" stroke-width=".6"/></svg></div>
+      <div class="phone"><img data-shot="play" src="img/s-play.webp" alt=""></div>
+    </div>
+  </div>
+</section>
+
+<div class="facts">
+  <div class="wrap">
+    <div class="fact"><strong>1,024</strong><span data-i18n="stat_total"></span></div>
+    <div class="fact"><strong>774</strong><span data-i18n="stat_idiom"></span></div>
+    <div class="fact"><strong>203</strong><span data-i18n="stat_saying"></span></div>
+    <div class="fact"><strong>47</strong><span data-i18n="stat_xhy"></span></div>
+    <div class="fact"><strong>∞</strong><span data-i18n="stat_levels"></span></div>
+  </div>
+</div>
+
+<section>
+  <div class="wrap">
+    <h2 class="sec-h" data-i18n="feat_h"></h2>
+    <div class="feats">
+      <div class="feat"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 8.5c-2 0-3.5 1.6-3.5 3.5S5 15.5 7 15.5c3.5 0 6.5-7 10-7 2 0 3.5 1.6 3.5 3.5S19 15.5 17 15.5c-3.5 0-6.5-7-10-7z"/></svg></div><div><h3 data-i18n="f1_h"></h3><p data-i18n="f1_p"></p></div></div>
+      <div class="feat"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 6.6C10.4 5.1 7.9 4.6 4 4.6v13c3.9 0 6.4.5 8 2 1.6-1.5 4.1-2 8-2v-13c-3.9 0-6.4.5-8 2z"/><path d="M12 6.6v13"/></svg></div><div><h3 data-i18n="f2_h"></h3><p data-i18n="f2_p"></p></div></div>
+      <div class="feat"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9.5h3l4.5-4v13L7 14.5H4z"/><path d="M15 9a4 4 0 0 1 0 6M17.5 6.5a7.5 7.5 0 0 1 0 11"/></svg></div><div><h3 data-i18n="f3_h"></h3><p data-i18n="f3_p"></p></div></div>
+      <div class="feat"><div class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><text x="12" y="17.5" text-anchor="middle" font-size="15" font-weight="900" fill="currentColor" font-family="Noto Serif SC,serif">文</text></svg></div><div><h3 data-i18n="f4_h"></h3><p data-i18n="f4_p"></p></div></div>
+      <div class="feat"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 18.5l6-8.5 3.5 5 2.5-3.5 7 7z"/><circle cx="17" cy="6.5" r="2"/></svg></div><div><h3 data-i18n="f5_h"></h3><p data-i18n="f5_p"></p></div></div>
+      <div class="feat"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5l5 5M8 10.5h5M10.5 8v5"/></svg></div><div><h3 data-i18n="f6_h"></h3><p data-i18n="f6_p"></p></div></div>
+    </div>
+    <span class="promise" data-i18n="promise"></span>
+  </div>
+</section>
+
+<section class="gallery-sec">
+  <div class="wrap">
+    <h2 class="sec-h" data-i18n="gal_h"></h2>
+    <div class="gallery" tabindex="0" aria-label="Screenshots">
+      <figure class="shot"><div class="frame"><img data-shot="play" src="img/s-play.webp" alt="" loading="lazy"></div><figcaption data-i18n="g_play"></figcaption></figure>
+      <figure class="shot"><div class="frame"><img data-shot="meaning" src="img/s-meaning.webp" alt="" loading="lazy"></div><figcaption data-i18n="g_meaning"></figcaption></figure>
+      <figure class="shot"><div class="frame"><img data-shot="season3" src="img/s-season3.webp" alt="" loading="lazy"></div><figcaption data-i18n="g_season"></figcaption></figure>
+      <figure class="shot"><div class="frame"><img data-shot="win" src="img/s-win.webp" alt="" loading="lazy"></div><figcaption data-i18n="g_win"></figcaption></figure>
+      <figure class="shot"><div class="frame"><img data-shot="book" src="img/s-book.webp" alt="" loading="lazy"></div><figcaption data-i18n="g_book"></figcaption></figure>
+      <figure class="shot"><div class="frame"><img src="img/chooser.webp" alt="" loading="lazy"></div><figcaption data-i18n="g_chooser"></figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2 class="sec-h" data-i18n="how_h"></h2>
+    <div class="steps">
+      <div class="step"><div class="num">一</div>
+        <div class="demo" aria-hidden="true"><span class="cell hl">一</span><span class="cell blank sel"></span><span class="cell hl" data-zh="风|風">风</span><span class="cell hl" data-zh="顺|順">顺</span></div>
+        <h3 data-i18n="h1_h"></h3><p data-i18n="h1_p"></p></div>
+      <div class="step"><div class="num">二</div>
+        <div class="demo" aria-hidden="true"><span class="tile" data-zh="满|滿">满</span><span class="tile up">帆</span><span class="tile" data-zh="顺|順">顺</span><span class="tile" data-zh="船|船">船</span></div>
+        <h3 data-i18n="h2_h"></h3><p data-i18n="h2_p"></p></div>
+      <div class="step"><div class="num">三</div>
+        <div class="demo" aria-hidden="true"><span class="cell ok">一</span><span class="cell ok">帆</span><span class="cell ok" data-zh="风|風">风</span><span class="cell ok" data-zh="顺|順">顺</span><span class="bubble" data-zh="船挂满帆顺风而行，比喻非常顺利|船掛滿帆順風而行，比喻非常順利">船挂满帆顺风而行，比喻非常顺利</span></div>
+        <h3 data-i18n="h3_h"></h3><p data-i18n="h3_p"></p></div>
+    </div>
+  </div>
+</section>
+
+<section class="gallery-sec">
+  <div class="wrap">
+    <h2 class="sec-h" data-i18n="seasons_h"></h2>
+    <p class="sec-p" data-i18n="seasons_p"></p>
+    <div class="seasons">
+      <figure class="season"><img src="img/spring.webp" alt="" loading="lazy"><figcaption><b>春</b><span data-i18n="spring"></span></figcaption></figure>
+      <figure class="season"><img src="img/summer.webp" alt="" loading="lazy"><figcaption><b>夏</b><span data-i18n="summer"></span></figcaption></figure>
+      <figure class="season"><img src="img/autumn.webp" alt="" loading="lazy"><figcaption><b>秋</b><span data-i18n="autumn"></span></figcaption></figure>
+      <figure class="season"><img src="img/winter.webp" alt="" loading="lazy"><figcaption><b>冬</b><span data-i18n="winter"></span></figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2 class="sec-h" data-i18n="faq_h"></h2>
+    <div class="faq">
+      <div class="qa"><h3 data-i18n="q1"></h3><p data-i18n="a1"></p></div>
+      <div class="qa"><h3 data-i18n="q2"></h3><p data-i18n="a2"></p></div>
+      <div class="qa"><h3 data-i18n="q3"></h3><p data-i18n="a3"></p></div>
+      <div class="qa"><h3 data-i18n="q4"></h3><p data-i18n="a4"></p></div>
+    </div>
+  </div>
+</section>
+
+<section class="final">
+  <div class="art">
+    <img src="img/autumn.webp" alt="" loading="lazy">
+    <div class="panel">
+      <svg width="64" height="64" viewBox="0 0 64 64" aria-hidden="true" style="transform:rotate(-6deg);flex:none"><defs><filter id="wc" x="-10%" y="-10%" width="120%" height="120%"><feTurbulence type="fractalNoise" baseFrequency="1.1" numOctaves="2" seed="7" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="2.6"/></filter><radialGradient id="pc" cx="35%" cy="30%" r="70%"><stop offset="0" stop-color="#fffbe6"/><stop offset=".5" stop-color="#ecc361"/><stop offset="1" stop-color="#a8741a"/></radialGradient></defs><g filter="url(#wc)"><rect x="4" y="4" width="56" height="56" rx="7" fill="#b8321f"/><rect x="9" y="9" width="46" height="46" rx="4" fill="none" stroke="#fbe9d0" stroke-width="2.2"/><text x="32" y="46" text-anchor="middle" font-family="Ma Shan Zheng, serif" font-size="38" fill="#fbe9d0">妙</text></g><circle cx="56" cy="56" r="7" fill="url(#pc)" stroke="#8a5a10" stroke-width=".6"/></svg>
+      <h2 data-i18n="final_h"></h2>
+      <a class="btn btn-play btn-lg" data-app href="https://claude.ai/artifact/2U8ZtL2ZL4TXFYvVh7JvN1"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 4.5v15l12-7.5z"/></svg><span data-i18n="cta"></span></a>
+      <span class="note" data-i18n="cta_note" style="margin:0"></span>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span><b class="brush" style="font-size:20px">妙语连珠</b> · <span data-i18n="footer_made"></span> · © 2026</span>
+    <span data-i18n="footer_priv"></span>
+  </div>
+</footer>
+
+<script>
+const I18N = {"nav_play": {"en": "Play", "s": "开玩", "t": "開玩"}, "eyebrow": {"en": "成语 · 俗语 · 谚语 · 歇后语 crossword", "s": "成语 · 俗语 · 谚语 · 歇后语 填字游戏", "t": "成語 · 俗語 · 諺語 · 歇後語 填字遊戲"}, "hero_h": {"en": "A Chinese crossword that keeps the mind sharp", "s": "一字一句，越玩越灵", "t": "一字一句，越玩越靈"}, "hero_p": {"en": "Fill in idioms, sayings and proverbs on a grid of crossing phrases. Every answer comes with its meaning, read aloud, so each level teaches something new.", "s": "横竖交错的成语、俗语、谚语和歇后语，一格一格填出来。每答对一句，就弹出它的意思并朗读出来，每一关都学到新东西。", "t": "橫豎交錯的成語、俗語、諺語和歇後語，一格一格填出來。每答對一句，就彈出它的意思並朗讀出來，每一關都學到新東西。"}, "cta": {"en": "Play now, free", "s": "立即开玩（免费）", "t": "立即開玩（免費）"}, "cta_note": {"en": "Runs in any phone or tablet browser · No sign-up · No ads", "s": "手机、平板浏览器直接玩 · 免注册 · 无广告", "t": "手機、平板瀏覽器直接玩 · 免註冊 · 無廣告"}, "android": {"en": "Android app coming soon", "s": "安卓版即将推出", "t": "安卓版即將推出"}, "scroll_caption": {"en": "Spring, level 1", "s": "春 · 第 1 关", "t": "春 · 第 1 關"}, "stat_total": {"en": "phrases, each with its meaning", "s": "句，每句都有释义", "t": "句，每句都有釋義"}, "stat_idiom": {"en": "成语 idioms", "s": "成语", "t": "成語"}, "stat_saying": {"en": "俗语 / 谚语 sayings", "s": "俗语 · 谚语", "t": "俗語 · 諺語"}, "stat_xhy": {"en": "歇后语 two-part allegories", "s": "歇后语", "t": "歇後語"}, "stat_levels": {"en": "levels, no end", "s": "关卡，没有尽头", "t": "關卡，沒有盡頭"}, "feat_h": {"en": "Made for long, happy practice", "s": "越玩越有味道", "t": "越玩越有味道"}, "f1_h": {"en": "Endless levels", "s": "无限关卡", "t": "無限關卡"}, "f1_p": {"en": "Every level is a fresh puzzle. New phrases come first, and the difficulty climbs slowly the further you go.", "s": "每一关都是新题。没学过的句子优先出现，越往后越难。", "t": "每一關都是新題。沒學過的句子優先出現，越往後越難。"}, "f2_h": {"en": "Learn every meaning", "s": "学会每句的意思", "t": "學會每句的意思"}, "f2_p": {"en": "Solve a phrase and its meaning pops up. Everything you solve is saved in 已学 to review any time.", "s": "答对一句就弹出释义，学过的句子都收进「已学」，随时复习。", "t": "答對一句就彈出釋義，學過的句子都收進「已學」，隨時複習。"}, "f3_h": {"en": "Read aloud", "s": "语音朗读", "t": "語音朗讀"}, "f3_p": {"en": "Each solved phrase and its meaning are spoken in Mandarin. Tap 再听一遍 to hear it again.", "s": "每答对一句，句子和意思都用普通话读出来，按「再听一遍」可以重听。", "t": "每答對一句，句子和意思都用普通話讀出來，按「再聽一遍」可以重聽。"}, "f4_h": {"en": "简体 or 繁體", "s": "简体或繁體", "t": "簡體或繁體"}, "f4_p": {"en": "Choose Simplified or Traditional characters on first play, and switch any time in settings.", "s": "第一次打开时选择简体或繁體，之后可在设置里随时更改。", "t": "第一次打開時選擇簡體或繁體，之後可在設置裏隨時更改。"}, "f5_h": {"en": "Four seasons of 山水", "s": "四季山水", "t": "四季山水"}, "f5_p": {"en": "Spring, summer, autumn and winter landscape paintings change with every level, with soft guzheng music.", "s": "春夏秋冬四幅山水画随关卡轮换，配上轻柔的古筝音乐。", "t": "春夏秋冬四幅山水畫隨關卡輪換，配上輕柔的古箏音樂。"}, "f6_h": {"en": "Easy on the eyes", "s": "长辈友好", "t": "長輩友好"}, "f6_p": {"en": "Large characters, big buttons, no timers, three difficulty levels and limited hints to keep it challenging.", "s": "大字、大按钮、不限时，三种难度，提示有限，保持挑战。", "t": "大字、大按鈕、不限時，三種難度，提示有限，保持挑戰。"}, "promise": {"en": "Free · No ads · No sign-up · Collects no data", "s": "免费 · 无广告 · 免注册 · 不收集任何资料", "t": "免費 · 無廣告 · 免註冊 · 不收集任何資料"}, "gal_h": {"en": "A look inside", "s": "游戏画面", "t": "遊戲畫面"}, "g_play": {"en": "Tap a square, then a character", "s": "点格子，再点字", "t": "點格子，再點字"}, "g_meaning": {"en": "Every answer comes with its meaning", "s": "答对就弹出释义", "t": "答對就彈出釋義"}, "g_win": {"en": "Review the whole level at the end", "s": "过关回顾本关所有句子", "t": "過關回顧本關所有句子"}, "g_book": {"en": "All you have learned, in one place", "s": "学过的句子都在「已学」", "t": "學過的句子都在「已學」"}, "g_season": {"en": "A new season every level", "s": "每关换一季山水", "t": "每關換一季山水"}, "g_chooser": {"en": "Simplified or Traditional", "s": "简体繁體任选", "t": "簡體繁體任選"}, "how_h": {"en": "How to play", "s": "怎么玩", "t": "怎麼玩"}, "h1_h": {"en": "Tap an empty square", "s": "点一个空格", "t": "點一個空格"}, "h1_p": {"en": "It turns gold, and the whole phrase through it lights up.", "s": "格子变成金黄色，经过它的整句会一起亮起。", "t": "格子變成金黃色，經過它的整句會一起亮起。"}, "h2_h": {"en": "Tap a character", "s": "点一个字", "t": "點一個字"}, "h2_p": {"en": "It drops into the square. Watch out for decoys in the tray.", "s": "字就填进格子里。小心字块里有干扰字。", "t": "字就填進格子裏。小心字塊裏有干擾字。"}, "h3_h": {"en": "Finish the phrase", "s": "填完整句", "t": "填完整句"}, "h3_p": {"en": "Right turns green and shows the meaning. Wrong turns red: tap it to take the character back.", "s": "填对变绿并弹出释义；填错变红，点一下就能把字拿回来。", "t": "填對變綠並彈出釋義；填錯變紅，點一下就能把字拿回來。"}, "seasons_h": {"en": "One season per level", "s": "一关一季", "t": "一關一季"}, "seasons_p": {"en": "Four landscape paintings, each with its scenery in the middle, behind the see-through squares.", "s": "四幅山水画，景色在画面中间，透过半透明的格子就能看到。", "t": "四幅山水畫，景色在畫面中間，透過半透明的格子就能看到。"}, "spring": {"en": "Spring", "s": "春", "t": "春"}, "summer": {"en": "Summer", "s": "夏", "t": "夏"}, "autumn": {"en": "Autumn", "s": "秋", "t": "秋"}, "winter": {"en": "Winter", "s": "冬", "t": "冬"}, "faq_h": {"en": "Questions", "s": "常见问题", "t": "常見問題"}, "q1": {"en": "Is it really free?", "s": "真的免费吗？", "t": "真的免費嗎？"}, "a1": {"en": "Yes. No ads, no purchases and no account.", "s": "真的。没有广告、没有付费项目，也不用注册。", "t": "真的。沒有廣告、沒有付費項目，也不用註冊。"}, "q2": {"en": "Do I need to install anything?", "s": "需要安装吗？", "t": "需要安裝嗎？"}, "a2": {"en": "No. It runs in the browser on any phone or tablet. For an app-like icon, use your browser's “Add to Home Screen”. An Android app is on the way.", "s": "不用。手机或平板的浏览器就能玩。想像 App 一样打开，可以用浏览器的「添加到主屏幕」。安卓版即将推出。", "t": "不用。手機或平板的瀏覽器就能玩。想像 App 一樣打開，可以用瀏覽器的「添加到主屏幕」。安卓版即將推出。"}, "q3": {"en": "Is my progress saved?", "s": "进度会保存吗？", "t": "進度會保存嗎？"}, "a3": {"en": "Yes, automatically, on the device and browser you play on.", "s": "会，自动保存在你玩的那台设备和浏览器里。", "t": "會，自動保存在你玩的那臺設備和瀏覽器裏。"}, "q4": {"en": "Who is it for?", "s": "适合谁玩？", "t": "適合誰玩？"}, "a4": {"en": "Anyone who reads Chinese, and especially parents and grandparents who enjoy a daily puzzle to keep the mind active.", "s": "看得懂中文的人都适合，特别是喜欢每天动动脑的爸妈和长辈。", "t": "看得懂中文的人都適合，特別是喜歡每天動動腦的爸媽和長輩。"}, "final_h": {"en": "Ready for level 1?", "s": "准备好第一关了吗？", "t": "準備好第一關了嗎？"}, "footer_made": {"en": "Made by Kith + Keen", "s": "Kith + Keen 出品", "t": "Kith + Keen 出品"}, "footer_priv": {"en": "Collects no personal data", "s": "不收集任何个人资料", "t": "不收集任何個人資料"}, "lang_label": {"en": "Language", "s": "语言", "t": "語言"}};
+// On GitHub Pages the game sits next to this page (../www/); elsewhere use the published game link.
+const APP_URL = location.hostname.endsWith('github.io') ? '../www/' : 'https://claude.ai/artifact/2U8ZtL2ZL4TXFYvVh7JvN1';
+document.querySelectorAll('[data-app]').forEach(a => { a.href = APP_URL; });
+const store = { get(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }, set(k, v) { try { localStorage.setItem(k, v); } catch (e) {} } };
+const TITLES = { en: '妙语连珠 · Chinese Crossword', s: '妙语连珠 · 成语填字游戏', t: '妙語連珠 · 成語填字遊戲' };
+function setLang(l) {
+  const html = document.documentElement;
+  html.lang = l === 'en' ? 'en' : l === 's' ? 'zh-Hans' : 'zh-Hant';
+  document.querySelectorAll('[data-i18n]').forEach(el => { const v = I18N[el.dataset.i18n]; if (v) el.textContent = v[l] || v.en; });
+  document.querySelectorAll('[data-shot]').forEach(img => { img.src = `img/${l === 't' ? 't' : 's'}-${img.dataset.shot}.webp`; });
+  document.querySelectorAll('[data-zh]').forEach(el => { const [s, t] = el.dataset.zh.split('|'); el.textContent = l === 't' ? t : s; });
+  document.querySelectorAll('.brand b, .vtitle').forEach(el => { el.firstChild.nodeValue = l === 't' ? '妙語' : '妙语'; const em = el.querySelector('em'); if (em) em.textContent = l === 't' ? '連珠' : '连珠'; });
+  document.querySelectorAll('footer .brush').forEach(el => { el.textContent = l === 't' ? '妙語連珠' : '妙语连珠'; });
+  document.querySelectorAll('.langs button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.lang === l)));
+  document.title = TITLES[l];
+  store.set('myl-lang', l);
+}
+document.querySelectorAll('.langs button').forEach(b => b.addEventListener('click', () => setLang(b.dataset.lang)));
+const saved = store.get('myl-lang');
+const nav = (navigator.language || 'en').toLowerCase();
+setLang(saved || (/^zh-(tw|hk|mo)|hant/.test(nav) ? 't' : nav.startsWith('zh') ? 's' : 'en'));
+</script>
+</body>
+</html>

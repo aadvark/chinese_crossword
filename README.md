@@ -11,6 +11,7 @@ Each solved phrase pops up its meaning and is read aloud, and every phrase learn
 ## Layout
 
 ```
+landing/             Bilingual landing page (EN / 简 / 繁); build with tools/build_landing.py
 www/                 The game: one page (index.html) + bg/ paintings + fonts/ (trimmed woff2)
 android/             Capacitor Android project (com.kithandkeen.miaoyulianzhu, targets API 36)
 assets/              Icon and splash sources (generated into android/ by @capacitor/assets)
@@ -22,6 +23,7 @@ tools/data*.txt      Phrase lists with meanings (simplified; traditional is gene
 ## Web
 
 `www/` is a static site; open `www/index.html` or host the folder anywhere.
+`landing/` is the landing page. On GitHub Pages its launch buttons point to `../www/`; elsewhere to the published game link.
 
 ## Android
 
