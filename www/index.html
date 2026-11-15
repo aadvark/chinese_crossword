@@ -47,9 +47,14 @@ html.trad h1{font-family:"MYL Kai","LXGW WenKai TC",var(--serif);font-weight:700
 .titlebox{display:flex;flex-direction:column;gap:3px}
 .tagline{display:flex;align-items:center;gap:4px;font-size:12px;font-weight:600;color:var(--ink2);letter-spacing:1px;white-space:nowrap}
 .pearl{display:inline-block;width:6px;height:6px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fffbe6,#ecc361 55%,#a8741a);box-shadow:0 0 3px rgba(217,164,65,.9)}
-.icons{display:flex;gap:5px}
-.icons button{display:flex;flex-direction:column;align-items:center;gap:1px;font-size:18px;line-height:1;padding:5px 5px 4px;border-radius:12px;border:1.5px solid #cdb487;background:rgba(255,251,240,.8);color:var(--ink);cursor:pointer;min-width:40px}
-.icons button span{font-size:12px;font-weight:700;color:var(--ink2)}
+.icons{display:flex;gap:2px;flex:none}
+.icons button{display:flex;flex-direction:column;align-items:center;gap:4px;min-width:46px;padding:2px;border:none;background:none;color:#4a3420;cursor:pointer}
+.icons button i{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;background:rgba(255,251,240,.78);box-shadow:0 1px 4px rgba(90,60,20,.16),inset 0 0 0 1px rgba(168,116,26,.22);transition:transform .15s}
+.icons button:active i{transform:scale(.92)}
+.icons button svg{width:22px;height:22px;display:block}
+header{min-width:0}.brand{min-width:0}
+@media (max-width:380px){.icons button{min-width:38px}.icons button i{width:36px;height:36px}.icons button svg{width:20px;height:20px}h1{font-size:30px!important}.logo{width:44px;height:44px}.tagline{font-size:10.5px;gap:3px;letter-spacing:0}.brand{gap:6px!important}}
+.icons button span{font-size:11.5px;font-weight:700;color:var(--ink2);letter-spacing:1px;line-height:1;text-shadow:0 0 6px #fff8e8}
 .lvrow{display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap}
 .ribbon{position:relative;background:linear-gradient(#c23a26,#9c2816);color:#fff6e3;font-family:var(--serif);font-weight:900;font-size:22px;padding:7px 22px;border-radius:6px;box-shadow:0 3px 8px rgba(120,30,10,.25);letter-spacing:2px}
 .chip{font-size:16px;font-weight:800;padding:6px 12px;border-radius:999px;border:1.5px solid var(--gold2);background:#fff8e6;color:var(--gold2);cursor:pointer}
@@ -141,9 +146,9 @@ html.trad h1{font-family:"MYL Kai","LXGW WenKai TC",var(--serif);font-weight:700
       </div>
     </div>
     <div class="icons">
-      <button id="bBook"><b>📖</b><span>已学</span></button>
-      <button id="bSet"><b>⚙️</b><span>设置</span></button>
-      <button id="bHelp"><b>❓</b><span>玩法</span></button>
+      <button id="bBook" aria-label="已学"><i aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 6.6C10.4 5.1 7.9 4.6 4 4.6v13c3.9 0 6.4.5 8 2 1.6-1.5 4.1-2 8-2v-13c-3.9 0-6.4.5-8 2z"/><path d="M12 6.6v13"/></svg></i><span>已学</span></button>
+      <button id="bSet" aria-label="设置"><i aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7.5h9.5M18.5 7.5H20M4 16.5h3.5M12.5 16.5H20"/><circle cx="16" cy="7.5" r="2.3"/><circle cx="10" cy="16.5" r="2.3"/></svg></i><span>设置</span></button>
+      <button id="bHelp" aria-label="玩法"><i aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.6"/><path d="M9.7 9.5a2.4 2.4 0 1 1 3.3 2.2c-.6.3-1 .8-1 1.5v.5"/><path d="M12 16.6h.01" stroke-width="2.6"/></svg></i><span>玩法</span></button>
     </div>
   </header>
   <div class="lvrow"><div class="ribbon" id="lv"></div><button class="chip" id="bDiff"></button></div>
@@ -165,7 +170,7 @@ html.trad h1{font-family:"MYL Kai","LXGW WenKai TC",var(--serif);font-weight:700
     <button id="bLangS" lang="zh-Hans"><b>简体中文</b><span>一帆风顺</span></button>
     <button id="bLangT" lang="zh-Hant"><b>繁體中文</b><span>一帆風順</span></button>
   </div>
-  <p style="text-align:center;font-size:16px;color:var(--ink2)"><span lang="zh-Hans">以后可在 ⚙️ 设置 中更改</span><br><span lang="zh-Hant">以後可在 ⚙️ 設置 中更改</span></p>
+  <p style="text-align:center;font-size:16px;color:var(--ink2)"><span lang="zh-Hans">以后可在「设置」中更改</span><br><span lang="zh-Hant">以後可在「設置」中更改</span></p>
 </div></div>
 
 <div class="ov" id="ovMean"><div class="card">
@@ -190,7 +195,7 @@ html.trad h1{font-family:"MYL Kai","LXGW WenKai TC",var(--serif);font-weight:700
     <li>横着、竖着每一串都是一个<b>成语、俗语、谚语或歇后语</b>（四到十个字）。</li>
     <li>填对了<b>变绿色</b>，还会弹出它的<b>意思</b>，帮你多学一句；填错变红，点一下红格把字拿回来。</li>
     <li>字块里有<b>干扰字</b>，不是每个都用得上。</li>
-    <li><b>💡 提示</b>每关次数有限。学过的句子都收在 <b>📖 已学</b> 里，可以随时复习。</li>
+    <li><b>💡 提示</b>每关次数有限。学过的句子都收在 <b>已学</b> 里，可以随时复习。</li>
   </ol>
   <button id="bHelpOk">开始</button>
 </div></div>
